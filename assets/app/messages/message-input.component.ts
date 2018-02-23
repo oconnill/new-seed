@@ -17,7 +17,9 @@ export class MessageInputComponent {
         const message = new Message(form.value.content, 'Max');
         this.messageService.addMessage(message)
         .subscribe(
-            result => console.log(result)
+            data => console.log(data),
+            error => console.log(error)
+            // result => console.log(result)
         );
         form.resetForm();
     }
