@@ -8,12 +8,22 @@ import { Message } from "./message.model";
     selector: 'app-message-input',
     templateUrl: './message-input.component.html'
 })
-export class MessageInputComponent {
+export class MessageInputComponent implements OnInit {
     message: Message;
 
     constructor(private messageService: MessageService) {}
 
     onSubmit(form: NgForm) {
+        if(this.message){
+            //editing the message
+            this.message.content = form.value.content;
+            this.messageService.updateMessage(this.message)
+            .subscribe(
+                result => console.log(result)
+            )
+            //setting message
+            this.message = null
+        } else{
         const message = new Message(form.value.content, 'Max');
         this.messageService.addMessage(message)
         .subscribe(
@@ -21,7 +31,19 @@ export class MessageInputComponent {
             error => console.log(error)
             // result => console.log(result)
         );
+    }
         form.resetForm();
+    }
+
+    onClear(form: NgForm) {
+        this.message = null
+        form.resetForm();
+    }
+
+    ngOnInit() {
+        this.messageService.messageIsEdit.subscribe(
+            (message: Message) => this.message = message
+        );
     }
 }
 
