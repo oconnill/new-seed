@@ -14,29 +14,27 @@ export class MessageInputComponent implements OnInit {
     constructor(private messageService: MessageService) {}
 
     onSubmit(form: NgForm) {
-        if(this.message){
-            //editing the message
+        if (this.message) {
+            // Edit
             this.message.content = form.value.content;
             this.messageService.updateMessage(this.message)
-            .subscribe(
-                result => console.log(result)
-            )
-            //setting message
-            this.message = null
-        } else{
-        const message = new Message(form.value.content, 'Max');
-        this.messageService.addMessage(message)
-        .subscribe(
-            data => console.log(data),
-            error => console.log(error)
-            // result => console.log(result)
-        );
-    }
+                .subscribe(
+                    result => console.log(result)
+                );
+            this.message = null;
+        } else {
+            // Create
+            const message = new Message(form.value.content, 'Max');
+            this.messageService.addMessage(message)
+                .subscribe(
+                    data => console.log(data),
+                );
+        }
         form.resetForm();
     }
 
     onClear(form: NgForm) {
-        this.message = null
+        this.message = null;
         form.resetForm();
     }
 
@@ -46,5 +44,3 @@ export class MessageInputComponent implements OnInit {
         );
     }
 }
-
-

@@ -28,7 +28,7 @@ export class MessageComponent {
     constructor(private messageService: MessageService) {}
 
     onEdit() {
-        this.messageService.editMessages(this.message)
+        this.messageService.editMessage(this.message)
     }
 
     onDelete() {
@@ -41,4 +41,5 @@ export class MessageComponent {
     belongsToUser() {
         return localStorage.getItem('userId') == this.message.userId;
     }
+
 }
